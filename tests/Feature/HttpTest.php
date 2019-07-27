@@ -3,9 +3,17 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class HttpTest
+ *
+ * @url https://laravel.com/docs/5.8/http-tests
+ *
+ * @package Tests\Feature
+ */
 class HttpTest extends TestCase
 {
     /**
@@ -26,14 +34,14 @@ class HttpTest extends TestCase
     public function testWithHeader()
     {
         /*
-         * Dodaj customowy header
+         * Add custom header
          */
         $response = $this->withHeaders([
                 'Authenitaction ' => 'Basic lsdldsl',
         ])->json('POST', '/test-with-header', ['name' => 'Nazwa']);
 
         /*
-         * Sprwadź czy przychodzi status success
+         * Check success status
          */
         $response
                 ->assertStatus(201)
@@ -62,7 +70,7 @@ class HttpTest extends TestCase
         $response = $this->withSession(['foo' => 'bar'])->get('/test-session');
 
         /*
-        * Sprwadź czy przychodzi status success
+        * Check if json contains bar
         */
         $response
                 ->assertStatus(200)
@@ -80,7 +88,7 @@ class HttpTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this
-                ->actingAs($user) // Without this line you get 302 HTTP STATUS
+                ->actingAs($user)// Without this line you get 302 HTTP STATUS
                 ->withSession(['foo' => 'bar'])
                 ->get('/test-session-with-auth');
 
@@ -105,9 +113,43 @@ class HttpTest extends TestCase
 
         $response
                 ->assertStatus(201)
-
+                // this has to be exact json response as presented
                 ->assertExactJson(
                         ['status' => 'success']
                 );
     }
+
+    /**
+     * NO 5. Testing File Uploads
+     */
+    public function testFileUpload()
+    {
+        /*
+         * If storage is identical to this use in testing method image [storage() <- second argument]
+         * will be stored in storage/testing/disks/...
+         * Otherwise it will be stored normally
+         */
+        Storage::fake('avatars');
+
+        /*
+         * Create fake image
+         */
+        $file = UploadedFile::fake()->image('avatar.jpg');
+
+        /*
+         * Sending Request
+         */
+        $response = $this->json('POST', '/test-file', [
+                'avatar' => $file,
+        ]);
+        $response->assertStatus(200);
+
+        // Assert the file was stored...
+        Storage::disk('avatars')->assertExists($file->hashName());
+
+        // Assert a file does not exist...
+        Storage::disk('avatars')->assertMissing('missing.jpg');
+    }
+
+
 }

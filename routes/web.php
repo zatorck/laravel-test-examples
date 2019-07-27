@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -36,8 +38,6 @@ Route::get('/test-session-with-auth', function (\Illuminate\Http\Request $reques
     ]);
 })->middleware('auth');;
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/testVerifyingAnExactJsonMatch', function () {
@@ -45,4 +45,11 @@ Route::post('/testVerifyingAnExactJsonMatch', function () {
      * Status code 201 jest wysyłany jest kiedy stowrzyliśmy conajmniej jeden item
      */
     return new \Illuminate\Http\JsonResponse(['status' => 'success'], 201);
+});
+
+Route::post('/test-file', function (\Illuminate\Http\Request $request) {
+
+    $path = $request->file('avatar')->store('', 'avatars');
+
+    return $path;
 });
