@@ -16,3 +16,15 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('question', function () {
+    $name = $this->ask('What is your name?');
+
+    $language = $this->choice('Which language do you program in?', [
+        'PHP',
+        'Ruby',
+        'Python',
+    ]);
+
+    $this->line('Your name is '.$name.' and you program in '.$language.'.');
+});
