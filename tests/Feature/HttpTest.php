@@ -60,9 +60,9 @@ class HttpTest extends TestCase
     {
         $respone = $this->get('/');
 
-        $respone->dumpHeaders();
+//        $respone->dumpHeaders();
 
-        $respone->dump();
+//        $respone->dump();
 
         $this->assertTrue(true);
     }

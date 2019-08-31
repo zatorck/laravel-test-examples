@@ -11,6 +11,8 @@
 |
 */
 
+use App\Example\ExampleService;
+
 Auth::routes();
 
 Route::get('/', function () {
@@ -34,7 +36,7 @@ Route::get('/test-session-with-auth', function (\Illuminate\Http\Request $reques
     $value = $request->session()->get('foo');
 
     return new \Illuminate\Http\JsonResponse([
-            'foo' => $value, 'fdoo' => 'bar',
+        'foo' => $value, 'fdoo' => 'bar',
     ]);
 })->middleware('auth');;
 
@@ -52,4 +54,10 @@ Route::post('/test-file', function (\Illuminate\Http\Request $request) {
     $path = $request->file('avatar')->store('', 'avatars');
 
     return $path;
+});
+
+Route::post('/testService', function (ExampleService $exampleService) {
+    return new \Illuminate\Http\JsonResponse([
+        'name' => $exampleService->giveMeNameBaby(),
+    ]);
 });

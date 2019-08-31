@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //multiple states doesn'x   x   t work with state function!!
+        //multiple states doesn't work with state function!!
         factory(App\User::class, 1)->states('admin', 'with_token')->create();
 
         factory(App\User::class, 50)->state('with_token')->create();
