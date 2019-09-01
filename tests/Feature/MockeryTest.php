@@ -8,8 +8,33 @@ use Mockery;
 use App\Example\ExampleService;
 
 /**
- * Class MockeryTest
+ * Class MockeryTest\
  *
+ * Case of using test doubles is to substitute real dependencies in testing object, by the abstract that we can control.
+ * We can decide to use them if we don't need or can use real dependencies of object - testing them is not a case.
+ * Test doubles do not need to implement real functionalists  of real object, just giving API need be testing class.
+ * There is few types of Test doubles:
+ *
+ * Stub - This type is using when behaviour of testing class depends of returning value from another object.
+ *        To test our function we need to be sure what is going to be returned, by the stub. We don't need any external
+ *        dependencies in the stubbed class. In this case we can use Stub, where we are sure what is going to be
+ *        returned.
+ *
+ * Spy - Using when testing class do not expect any return value, giving them responsibility for future actions.
+ *       This way we are sure that spied class was used with known parameters. It's "observation point" witch helps us
+ *       to verify that we use but not test our dependencies themselves.
+ *
+ * Mock object - We can call it combination of Stub and Spy. We use Mocking object when we need expecting response in
+ *               case of giving specific value. We can use Mocking object multiple times with different value.
+ *
+ * Fake object - sometimes real dependency can be swapped by lighter implantation, giving us need functionality, but
+ *               without other side effects. Simplicity of object means that we can depend of its behaviour, without
+ *               creating assumptions all the time.
+ *
+ * Dummy object - Sometime we don't need functionalists of object but only giving instance of itself. We don't need
+ *                implementation, only it's presence. In this case we use Dummy object.
+ *
+ * @url http://docs.mockery.io/en/latest/index.html
  * @url https://laravel.com/docs/5.8/mocking
  *
  * @package Tests\Feature

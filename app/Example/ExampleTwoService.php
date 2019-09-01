@@ -14,11 +14,23 @@ namespace App\Example;
  */
 class ExampleTwoService
 {
+    private $temperature;
+
+    public function __construct(TemperatureInterface $temperature)
+    {
+        $this->temperature = $temperature;
+    }
+
     /**
      * @return string
      */
     public function giveMeNameBaby()
     {
         return 'ferrari';
+    }
+
+    public function getTemp()
+    {
+        return $this->temperature->average(1);
     }
 }

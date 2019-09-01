@@ -21,4 +21,10 @@ class ExampleService
     {
         return 'aston';
     }
+
+    public function readTemp()
+    {
+        return rand(1, 3);
+
+    }
 }
