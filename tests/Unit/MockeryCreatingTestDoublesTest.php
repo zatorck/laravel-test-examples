@@ -2,7 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Example\MockAliasExample;
 use App\Example\ExampleService;
+use App\Example\MockOverloadExample;
+use Mockery\Mock;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -99,5 +102,30 @@ class MockeryCreatingTestDoublesTest extends TestCase
         $foo->giveMeNameBaby(); // int(456)
 
         // Theres also Proxied partial test doubles but it simply saxx
+
+    }
+
+    /**
+     *  It's used for static public methods, construct are not called
+     * "Even though aliasing classes is supported, we do not recommend it."
+     */
+    public function testAliasMocking()
+    {
+        $mock = \Mockery::mock('alias:'.MockAliasExample::class);
+
+        // Next line generate error ("no function")
+        // MockAliasExample::giveMeAlias();
+    }
+
+    /**
+     * In diffrence to mockery alias Mockery will generate two __construct's
+     * one by default, other to match the interface contains a __construct
+     * method youre expecting the newly generated class to implement
+     * Mockery test says that it will be usefull in hard dependencies but I think
+     * that natvie Laravel mocking is way
+     */
+    public function testOverloadMocking()
+    {
+        $mock = \Mockery::mock('overload:'.MockOverloadExample::class);
     }
 }
