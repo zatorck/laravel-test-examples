@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Example\ExampleServiceWithConstuctor;
 use App\Example\MockAliasExample;
 use App\Example\ExampleService;
 use App\Example\MockOverloadExample;
@@ -58,6 +59,8 @@ class MockeryCreatingTestDoublesTest extends TestCase
      * As we can see from this example, with a mock object we set the call expectations before the call itself, and we
      * get the return result we expect it to return. With a spy object on the other hand, we verify the call has
      * happened after the fact. The return result of a method call against a spy is always
+     *
+     * @retun void
      */
     public function testMockVsSpies()
     {
@@ -75,6 +78,8 @@ class MockeryCreatingTestDoublesTest extends TestCase
     /**
      * Partial doubles are useful when we want to stub out, set expectations for, or spy on some methods of a class,
      * but run the actual code for other methods.
+     *
+     * @retun void
      */
     public function testPartialTestDoubles()
     {
@@ -108,6 +113,8 @@ class MockeryCreatingTestDoublesTest extends TestCase
     /**
      *  It's used for static public methods, construct are not called
      * "Even though aliasing classes is supported, we do not recommend it."
+     *
+     * @retun void
      */
     public function testAliasMocking()
     {
@@ -115,6 +122,8 @@ class MockeryCreatingTestDoublesTest extends TestCase
 
         // Next line generate error ("no function")
         // MockAliasExample::giveMeAlias();
+
+        $this->assertTrue(true);
     }
 
     /**
@@ -123,9 +132,41 @@ class MockeryCreatingTestDoublesTest extends TestCase
      * method youre expecting the newly generated class to implement
      * Mockery test says that it will be usefull in hard dependencies but I think
      * that natvie Laravel mocking is way
+     *
+     * @retun void
      */
     public function testOverloadMocking()
     {
         $mock = \Mockery::mock('overload:'.MockOverloadExample::class);
+
+        $this->assertTrue(true);
+    }
+
+    // I skipped Named Mock because It will be shown in cookbook
+
+    /**
+     * Sometimes the mocked class has required constructor arguments. We can pass these to Mockery as an indexed array,
+     * as the 2nd argument, or if we need the MyClass to implement an interface as well, as the 3rd argument
+     *
+     * @retun void
+     */
+    public function testAddingConstructorArgument()
+    {
+        // Class to mock has to has constructor
+        $mock = \Mockery::mock(ExampleServiceWithConstuctor::class, ['arg3', 'arg2']);
+
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * I found that shouldIgnoreMissing() is quite similiar to spy() instead of mocking() but you cannot expect nothing
+     * using it.
+     */
+    public function testShouldIgnoreMissing()
+    {
+        $mock = \Mockery::mock('FooBarBazNoClass')->shouldIgnoreMissing();
+
+        $mock->anyAction();
     }
 }

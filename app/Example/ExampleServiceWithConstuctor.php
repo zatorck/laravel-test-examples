@@ -5,19 +5,23 @@ namespace App\Example;
 
 
 /**
- * Class ExampleService
+ * Class ExampleServiceWithConstuctor
  *
  * It's example service that is used to learn
  * about service mockery in Laravel
  *
  * @package App\Example
  */
-class ExampleService
+class ExampleServiceWithConstuctor
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @return string
      */
-    public function giveMeNameBaby(): string
+    public function giveMeNameBaby()
     {
         return 'aston';
     }
