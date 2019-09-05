@@ -15,8 +15,9 @@ yarn-error.log
 
 
 # User-specific stuff:
-app/
 
-.idea
+
+.idea/*
+#!.idea/codeStyles/*
 
 
