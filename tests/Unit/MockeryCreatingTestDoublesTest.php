@@ -95,7 +95,7 @@ class MockeryCreatingTestDoublesTest extends TestCase
 
         // generated partial test doubles
         // Even though we support generated partial test doubles, we do not recommend using them.
-        $foo = \Mockery::mock(ExampleService::class."[giveMeNameBaby]");
+        $foo = \Mockery::mock(ExampleService::class . "[giveMeNameBaby]");
 
         // $foo->giveMeNameBaby(); // error, no expectation set
 
@@ -118,7 +118,7 @@ class MockeryCreatingTestDoublesTest extends TestCase
      */
     public function testAliasMocking()
     {
-        $mock = \Mockery::mock('alias:'.MockAliasExample::class);
+        $mock = \Mockery::mock('alias:' . MockAliasExample::class);
 
         // Next line generate error ("no function")
         // MockAliasExample::giveMeAlias();
@@ -137,7 +137,7 @@ class MockeryCreatingTestDoublesTest extends TestCase
      */
     public function testOverloadMocking()
     {
-        $mock = \Mockery::mock('overload:'.MockOverloadExample::class);
+        $mock = \Mockery::mock('overload:' . MockOverloadExample::class);
 
         $this->assertTrue(true);
     }
@@ -158,7 +158,6 @@ class MockeryCreatingTestDoublesTest extends TestCase
 
         $this->assertTrue(true);
     }
-
     /**
      * I found that shouldIgnoreMissing() is quite similiar to spy() instead of mocking() but you cannot expect nothing
      * using it.
@@ -171,5 +170,11 @@ class MockeryCreatingTestDoublesTest extends TestCase
 
         $this->assertTrue(true);
 
+
+        $mock = \Mockery::mock(ExampleService::class);
+
+
     }
+
+
 }

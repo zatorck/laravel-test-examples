@@ -14,6 +14,14 @@ namespace App\Example;
  */
 class ExampleService
 {
+
+    private $exampleTwoService;
+
+    public function __construct(ExampleTwoService $exampleTwoService)
+    {
+        $exampleTwoService = $exampleTwoService;
+    }
+
     /**
      * @return string
      */
@@ -26,5 +34,10 @@ class ExampleService
     {
         return rand(1, 3);
 
+    }
+
+    public function name()
+    {
+        return $this->exampleTwoService->giveMeNameBaby();
     }
 }
