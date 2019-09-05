@@ -168,5 +168,8 @@ class MockeryCreatingTestDoublesTest extends TestCase
         $mock = \Mockery::mock('FooBarBazNoClass')->shouldIgnoreMissing();
 
         $mock->anyAction();
+
+        $this->assertTrue(true);
+
     }
 }
